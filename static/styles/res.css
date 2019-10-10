@@ -1,0 +1,47 @@
+/* Intermediate: */
+@media only screen and (min-width: 769px) and (max-width: 1000px) {
+  .nav > .logo > .name {
+    font-size: 1rem;
+  }
+}
+
+/* For mobile phones: */
+@media only screen and (max-width: 768px) {
+  .nav > .logo > .name {
+    display: none;
+  }
+
+  .nav > .logo > .icon {
+    width: 100%;
+  }
+
+  .link-text {
+    display: none;
+  }
+
+  .link-wrapper{
+    font-size: 1.3rem;
+  }
+}
+
+/* Smaller mobile phones / low-res */
+@media only screen and (max-width: 480px) {
+  .input-search {
+    font-size: .7rem;
+  }
+
+  .account-wrapper {
+    font-size: .7rem;
+  }
+}
+
+@media only screen and (max-height: 800px) {
+  /* .search-field {
+    
+  } */
+
+  .nav > .logo > .name {
+    font-size: 2.5vmin;
+
+  }
+}

@@ -1,0 +1,337 @@
+{% extends "base.html" %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/rating.css') }}">
+{% endblock %}
+
+{% block title %}Rotten Potatoes - {{ data[0][1] }}{% endblock %}
+
+{% block content %}
+<div class="card col-md-12">
+    <div class="row no-gutters">
+        <div class="col-md-4">
+        <img src="{{ img_url }}" class="card-img" alt="Poster">
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title">{{ data[0][1] }}</h5>
+                <div class="top-details">
+                    <div class="card-text pull-left">
+                        {% if omdb_data['Rated'] %}
+                            <small class="text-muted"><span class="font-weight-bold">Rating: </span>{{ omdb_data['Rated'] }}</small>
+                        {% endif %}
+                        {% if omdb_data['Rated'] or omdb_data['Released'] %}
+                            <br>
+                        {% endif %}
+                        
+                        <small class="text-muted"><span class="font-weight-bold">Released: </span>
+                            {% if omdb_data['Released'] %}
+                                {{ omdb_data['Released'] }}
+                            {% else %}
+                                {{ data[0][2] }}
+                            {% endif %}
+                        </small>
+                        
+                        <br><small class="text-muted"><span class="font-weight-bold">Runtime: </span>{{ data[0][3] }}</small>
+                    </div>
+                    <div class="card-text pull-right" style="text-align: right">
+                        <h6><span class="font-weight-bold">Our Rating: </span>
+                            {% if data[0][5] is none %}
+                                <span class="text-muted">None</span>
+                            {% else %}
+                                {{ data[0][5] }}
+                            {% endif %}
+                        </h6>
+                        <h6><span class="font-weight-bold">IMDB Rating: </span>{{ data[0][4] }}</h6>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                
+                <hr>
+                {% if omdb_data['Plot'] %}
+                    <h6 class="card-subtitle mb-2 font-weight-bold">Plot</h6>
+                    <p class="card-text">{{ omdb_data['Plot'] }}</p>
+                {% endif %}
+                
+
+                {% if omdb_data is not none %}
+
+                    <ul class="list-group list-group-flush">
+                        
+                    {% if omdb_data['Genre'] %}
+                        <li class="list-group-item">
+                            <table class="table table-borderless no-margin-bottom">
+                                <tr>
+                                    <th scope="col" class="text-left">
+                                        <h6 class="font-weight-bold">Genre</h6>
+                                    </th>
+                                    <th scope="col" class="text-right">
+                                        <h6>{{ omdb_data['Genre'] }}</h6>
+                                    </th>
+                                </tr>
+                            </table>
+                        </li>
+                    {% endif %}
+
+                    {% if omdb_data['Director'] %}
+                        <li class="list-group-item">
+                            <table class="table table-borderless no-margin-bottom">
+                                <tr>
+                                    <th scope="col" class="text-left">
+                                        <h6 class="font-weight-bold">Director</h6>
+                                    </th>
+                                    <th scope="col" class="text-right">
+                                        <h6>{{ omdb_data['Director'] }}</h6>
+                                    </th>
+                                </tr>
+                            </table>
+                        </li>
+                    {% endif %}
+
+                    {% if omdb_data['Writer'] %}
+                        <li class="list-group-item">
+                            <table class="table table-borderless no-margin-bottom">
+                                <tr>
+                                    <th scope="col" class="text-left">
+                                        <h6 class="font-weight-bold">Writer</h6>
+                                    </th>
+                                    <th scope="col" class="text-right">
+                                        <h6>{{ omdb_data['Writer'] }}</h6>
+                                    </th>
+                                </tr>
+                            </table>
+                        </li>
+                    {% endif %}
+
+                    {% if omdb_data['Actors'] %}
+                        <li class="list-group-item">
+                            <table class="table table-borderless no-margin-bottom">
+                                <tr>
+                                    <th scope="col" class="text-left">
+                                        <h6 class="font-weight-bold">Actors</h6>
+                                    </th>
+                                    <th scope="col" class="text-right">
+                                        <h6>{{ omdb_data['Actors'] }}</h6>
+                                    </th>
+                                </tr>
+                            </table>
+                        </li>
+                    {% endif %}
+
+                    {% if omdb_data['Production'] %}
+                        <li class="list-group-item">
+                            <table class="table table-borderless no-margin-bottom">
+                                <tr>
+                                    <th scope="col" class="text-left">
+                                        <h6 class="font-weight-bold">Production</h6>
+                                    </th>
+                                    <th scope="col" class="text-right">
+                                        <h6>{{ omdb_data['Production'] }}</h6>
+                                    </th>
+                                </tr>
+                            </table>
+                        </li>
+                    {% endif %}
+
+                    {% if omdb_data['BoxOffice'] != 'N/A' %}
+                        <li class="list-group-item">
+                            <table class="table table-borderless no-margin-bottom">
+                                <tr>
+                                    <th scope="col" class="text-left">
+                                        <h6 class="font-weight-bold">Box Office</h6>
+                                    </th>
+                                    <th scope="col" class="text-right">
+                                        <h6>{{ omdb_data['BoxOffice'] }}</h6>
+                                    </th>
+                                </tr>
+                            </table>
+                        </li>
+                    {% endif %}
+
+                    {% if omdb_data['Awards'] %}
+                        <li class="list-group-item">
+                            <table class="table table-borderless no-margin-bottom">
+                                <tr>
+                                    <th scope="col" class="text-left">
+                                        <h6 class="font-weight-bold">Awards</h6>
+                                    </th>
+                                    <th scope="col" class="text-right">
+                                        <h6>{{ omdb_data['Awards'] }}</h6>
+                                    </th>
+                                </tr>
+                            </table>
+                        </li>
+                    {% endif %}
+
+                    {% if omdb_data['Language'] %}
+                        <li class="list-group-item">
+                            <table class="table table-borderless no-margin-bottom">
+                                <tr>
+                                    <th scope="col" class="text-left">
+                                        <h6 class="font-weight-bold">Language</h6>
+                                    </th>
+                                    <th scope="col" class="text-right">
+                                        <h6>{{ omdb_data['Language'] }}</h6>
+                                    </th>
+                                </tr>
+                            </table>
+                        </li>
+                    {% endif %}
+
+                    {% if omdb_data['Country'] %}
+                        <li class="list-group-item">
+                            <table class="table table-borderless no-margin-bottom">
+                                <tr>
+                                    <th scope="col" class="text-left">
+                                        <h6 class="font-weight-bold">Country</h6>
+                                    </th>
+                                    <th scope="col" class="text-right">
+                                        <h6>{{ omdb_data['Country'] }}</h6>
+                                    </th>
+                                </tr>
+                            </table>
+                        </li>
+                    {% endif %}
+
+                    {% if omdb_data['Website'] %}
+                        <li class="list-group-item">
+                            <table class="table table-borderless no-margin-bottom">
+                                <tr>
+                                    <th scope="col" class="text-left">
+                                        <h6 class="font-weight-bold">Website</h6>
+                                    </th>
+                                    <th scope="col" class="text-right">
+                                        <h6><a href="{{ omdb_data['Website'] }}" class="no-underline">{{ omdb_data['Website'] }}</a></h6>
+                                    </th>
+                                </tr>
+                            </table>
+                        </li>
+                    {% endif %}
+
+                {% endif %}
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% if session['is_logged'] and not_reviewed %}
+<div class="card col-md-12">
+    <div class="card-body">
+        <h5 class="card-title">Submit a Review</h5>
+        
+        <form class="review-form" method="POST" action="">
+            {{ reviewform.csrf_token() }}
+            <div class="form-group">
+                <label title="Leave your rating!">Rating</label>
+                <br>
+                <fieldset class="rating">
+
+                    {{ rating_list['10'] }} {{ rating_list['10'].label(class="full", title="Awesome - 10/10") }}
+                    {{ rating_list['9'] }}   {{ rating_list['9'].label(class="half", title="Wow - 9/10") }}
+                    {{ rating_list['8'] }}   {{ rating_list['8'].label(class="full", title="Pretty good - 8/10") }}
+                    {{ rating_list['7'] }}   {{ rating_list['7'].label(class="half", title="Good - 7/10") }}
+                    {{ rating_list['6'] }}   {{ rating_list['6'].label(class="full", title="Quite good - 6/10") }}
+                    {{ rating_list['5'] }}   {{ rating_list['5'].label(class="half", title="Okay... - 5/10") }}
+                    {{ rating_list['4'] }}   {{ rating_list['4'].label(class="full", title="Kinda ok - 4/10") }}
+                    {{ rating_list['3'] }}   {{ rating_list['3'].label(class="half", title="Meh - 3/10") }}
+                    {{ rating_list['2'] }}   {{ rating_list['2'].label(class="full", title="Not so good - 2/10") }}
+                    {{ rating_list['1'] }}   {{ rating_list['1'].label(class="half", title="Sucks big time - 1/10") }}
+
+                    <!-- <input type="radio" id="star5" name="rating" value="10" /><label class = "full" for="star5" title="Awesome - 10/10"></label>
+                    <input type="radio" id="star4half" name="rating" value="9" /><label class="half" for="star4half" title="Wow - 9/10"></label>
+                    <input type="radio" id="star4" name="rating" value="8" /><label class = "full" for="star4" title="Pretty good - 8/10"></label>
+                    <input type="radio" id="star3half" name="rating" value="7" /><label class="half" for="star3half" title="Good - 7/10"></label>
+                    <input type="radio" id="star3" name="rating" value="6" /><label class = "full" for="star3" title="Quite good - 6/10"></label>
+                    <input type="radio" id="star2half" name="rating" value="5" /><label class="half" for="star2half" title="Okay... - 5/10"></label>
+                    <input type="radio" id="star2" name="rating" value="4" /><label class = "full" for="star2" title="Kinda ok - 4/10"></label>
+                    <input type="radio" id="star1half" name="rating" value="3" /><label class="half" for="star1half" title="Meh - 3/10"></label>
+                    <input type="radio" id="star1" name="rating" value="2" /><label class = "full" for="star1" title="Not so good - 2/10"></label>
+                    <input type="radio" id="starhalf" name="rating" value="1" /><label class="half" for="starhalf" title="Sucks big time - 1/10"></label> -->
+                </fieldset>
+
+                {% if reviewform.rating.errors %}
+                    <div class="invalid-feedback">
+                    {% for error in reviewform.rating.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <br><br>
+            <div class="form-group">
+                {{ reviewform.review.label }}<br><br>
+                {{ reviewform.review(class="form-control col-md-12") }}
+                {% if reviewform.review.errors %}
+                    <div class="invalid-feedback">
+                    {% for error in reviewform.review.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ reviewform.submit(class="btn btn-primary") }}
+            </div>
+                
+        </form>
+    </div>
+</div>
+{% elif not not_reviewed %}
+    <div class="card col-md-12" style="border: #333 solid 2px">
+        <div class="card-body">
+            <h5 class="card-title">Your Review</h5>
+            <hr>
+            <h6><span class="font-weight-bold">Rating: </span>{{ your_review[2] }}</h6>
+            <br>
+            <h6 class="card-subtitle font-weight-bold">Review:</h6>
+            <p class="card-text">
+                <h6 class="card-text">
+                    {{ your_review[3] }}
+                </h6>
+            </p>
+        </div>
+    </div>
+{% elif not session['is_logged'] %}
+    <div class="card bg-info">
+        <div class="card-body">
+            <h6 class="card-text">
+                <a href="{{ url_for('login') }}" class="font-weight-bold" style="color: white;">Log in</a> to leave a review!
+            </h6>
+        </div>
+    </div>
+{% endif %}
+
+<h3>Reviews</h3><hr>
+{% if reviews|length == 0 %}
+<h6 class="text-muted font-weight-bold">No reviews yet.</h6>
+{% else %}
+    {% for chunk in reviews %}
+    <div class="card-deck">
+        {% for review in chunk %}
+            <div class="card col-md-6 col-xs-12 {{ 'single-card' if chunk|length == 1 }}">
+                <div class="card-body">
+                    <!-- username -->
+                    <h5 class="card-title">{{ review[1] }}</h5><hr>
+                    
+                    <h6><span class="font-weight-bold">Rating: </span>{{ review[2] }}</h6>
+        
+                    <br>
+                    <h6 class="card-subtitle font-weight-bold">Review:</h6>
+                    <p class="card-text"></p>
+                        <h6 class="card-text">
+                            {{ review[3] }}
+                        </h6>
+                    </p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    {% endfor %}
+{% endif %}
+
+{% endblock %}

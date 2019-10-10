@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+
+{% block title %}Rotten Potatoes - Login{% endblock %}
+
+{% block materialize %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/normalize.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/materialize.min.css') }}">
+{% endblock %}
+
+<!-- remove bootstrap for interference with materialize and normalize-->
+{% block bootstrap %}
+<!-- required bootstrap for flashes -->
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/bs-alert.css') }}">
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+{% endblock %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/login.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/login2.css') }}">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='scripts/materialize.min.js') }}"></script>
+<script src="{{ url_for('static', filename='scripts/forms.js') }}" defer></script>
+{% endblock %}
+
+{% block body %}
+
+{% include "flashes.html" %}
+
+<div class="row main-style">
+    <div class="container-fluid">
+        <div class="valign-wrapper screen-height">
+
+            <div class="col card s12 m8 l6 xl4 auto-margin set-max-width overflow-hidden main-fix" style="margin: 0 auto;"> <!-- temp fix auto margin -->
+                <div class="row hidden" id="progress-bar">
+                <div class="progress mar-no">
+                    <div class="indeterminate"></div>
+                </div>
+                </div>
+                <div class="clearfix mar-all pad-all"></div>
+
+                <a tabIndex="-1"  href="{{ url_for('index') }}" class="a-img"><img src="{{ url_for('static', filename='assets/icon64.png') }}" class="logo-image" /></a>
+                <h5 class="center-align mar-top mar-bottom form-title">Sign Up</h5>
+
+                <div class="clearfix mar-all pad-all"></div>
+
+                <div id="form-container" class="go-right">
+
+                    <form class="signup-form" method="POST" action="">
+                        {{ form.csrf_token() }} <!-- includes csrf token -->
+
+                        <div class="input-fields-div auto-margin">
+                            
+                            <!-- username -->
+                            <div class="input-field">
+                                {% if form.username.errors %}
+                                    {{ form.username(class="form-control form-control-lg validate is-invalid") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.username.errors %}
+                                            <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {% if username %}
+                                        {{ form.username(class="form-control form-control-lg validate", value=username) }}
+                                    {% else %}
+                                        {{ form.username(class="form-control form-control-lg validate") }}
+                                    {% endif %}
+                                {% endif %}
+                                {{ form.username.label(class="label-font-fix")}}
+                                <span class="helper-text">Pick a unique username that is 4-20 characters long</span> <!--data-error="" data-success=""-->
+                            </div>
+
+                            <!-- email -->
+                            <div class="input-field">
+                                {% if form.email.errors %}
+                                    {{ form.email(class="form-control form-control-lg validate is-invalid") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.email.errors %}
+                                            <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {% if email %}
+                                        {{ form.email(class="form-control form-control-lg validate", value=email) }}
+                                    {% else %}
+                                        {{ form.email(class="form-control form-control-lg validate") }}
+                                    {% endif %}
+                                {% endif %}
+                                {{ form.email.label(class="label-font-fix")}}
+                            </div>
+
+                            <!-- passwords (both inline) -->
+                            <div class="row input-inline-field">
+
+                                <div id="passwordDiv" class="input-field col s6">
+                                    {% if form.password.errors %}
+                                    {{ form.password(class="form-control form-control-lg validate is-invalid") }}
+                                        <div class="invalid-feedback signup-pw-invalid-feedback">
+                                            {% for error in form.password.errors %}
+                                                <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+
+                                        <!--  text "visibility" used in forms.js as control boolean -->
+                                        <a tabIndex="-1"  href="javascript:void(0)" class="show-password invalid-height" onclick="showPassword()"><i class="material-icons md-18">visibility</i></a>
+                                        
+                                    {% else %}
+                                        {{ form.password(class="form-control form-control-lg validate") }}
+                                        <a tabIndex="-1"  href="javascript:void(0)" class="show-password" onclick="showPassword()"><i class="material-icons md-18">visibility</i></a>
+                                    {% endif %}
+                                    {{ form.password.label(class="label-font-fix") }}
+
+                                    
+                                </div>
+
+                                <div id="confirmPasswordDiv" class="input-field col s6">
+                                    {% if form.confirm_password.errors %}
+                                    {{ form.confirm_password(class="form-control form-control-lg validate is-invalid") }}
+                                        <div class="invalid-feedback signup-pw-invalid-feedback">
+                                            {% for error in form.confirm_password.errors %}
+                                                <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        {{ form.confirm_password(class="form-control form-control-lg validate") }}
+                                    {% endif %}
+                                    {{ form.confirm_password.label(class="label-font-fix") }}
+                                </div>
+
+                                <div class="input-field col s12 mar-no">
+                                    <span class="helper-text">Use 8 or more characters with a mix of letters, numbers & symbols for a strong password</span>
+                                </div>
+
+                            </div>
+
+                            <!-- remember me -->
+                            <div id="rememberDiv" class="form-check">
+                                {{ form.remember(class="form-check-input", checked=session['remember_me_preferences']) }}
+                                {{ form.remember.label(class="form-check-label") }}
+                            </div>
+
+                            <p>Already have an account?<br><a href="{{ url_for('login') }}" class="back-to-login">Login</a></p>
+                        </div>
+
+                        <div class="input-fields-div auto-margin right-align">
+                            {{ form.submit(class="signup-btn btn") }}
+                        </div>
+
+                    </form>
+
+                    <div class="clearfix"></div>
+
+                </div>
+
+                <div class="clearfix mar-all pad-all"></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

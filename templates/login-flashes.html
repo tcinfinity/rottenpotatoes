@@ -1,0 +1,5 @@
+{% if datatype == 'email' %}
+    Email <span class="flash-variable">{{ data }}</span> not found. <a href="{{ url_for('signup', email=data) }}">Sign up</a> instead.
+{% else %} <!-- username -->
+    Username <span class="flash-variable">{{ data }}</span> not found. <a href="{{ url_for('signup', username=data) }}">Sign up</a> instead.
+{% endif %}

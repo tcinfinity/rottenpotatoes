@@ -1,0 +1,7 @@
+{% if 'u' in fail and 'e' in fail %}
+    Username <span class="flash-variable">{{username}}</span> and email <span class="flash-variable">{{email}}</span> already taken. <a href="{{ url_for('login', username=username) }}" class="alert-link">Log in</a> instead.
+{% elif 'u' in fail %}
+    Username <span class="flash-variable">{{username}}</span> already taken. <a href="{{ url_for('login', username=username) }}" class="alert-link">Log in</a> instead.
+{% elif 'e' in fail %}
+    Email <span class="flash-variable">{{email}}</span> already taken. <a href="{{ url_for('login', username=email) }}" class="alert-link">Log in</a> instead.
+{% endif %}

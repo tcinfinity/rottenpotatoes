@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="description" content="Rotten Potatoes - Movie Reviews and Ratings">
+    <meta name="author" content="Rotten Potatoes">
+    <meta name="keywords" 
+       content="rotten potatoes,rotten,potatoes,movie reviews,movie,review,reviews,movie ratings,rating,ratings,rotten tomatoes,imdb,show,film">
+
+    <title>{% block title %}{% endblock %}</title>
+
+    {% block materialize %}
+    {% endblock %}
+
+    {% block bootstrap %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    {% endblock %}
+
+    {% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/font.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/res.css') }}">
+    {% endblock %}
+
+    {% block scripts %}
+    {% endblock %}
+
+    <!-- icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    {% block favicon %}
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='assets/favicon.ico') }}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='assets/favicon.ico') }}">
+    {% endblock %}
+</head>
+
+<body>
+    {% block body %}
+
+    <div class="window">
+
+        {% block nav %}
+        <div class="nav">
+
+            <div class="logo">
+                <div class="icon">
+                    <a href="{{ url_for('index') }}" class="a-img">
+                        <img src="{{ url_for('static', filename='assets/icon256.png') }}" 
+                            srcset="{{ url_for('static', filename='assets/icon64.png') }} 64w" 
+                            sizes="(min-width: 768px) 7vmin, 11vmin"
+                            alt="Rotten Potatoes Logo">
+                    </a>
+                </div>
+                <div class="name">
+                    Rotten Potatoes
+                </div>
+            </div>
+            <div class="wrapper">
+                <form class="search" method="POST" action="">
+                    {{ form.csrf_token() }} <!-- includes csrf token -->
+
+                    <div class="search-field">
+                        {{ form.search(class="input-search", placeholder="Find Movies by Title, IMDB ID, Year of Release...", autocomplete="off") }}
+                        <!-- <input type="text" name="search" class="input-search" placeholder="Find Movies..." autocomplete="off"> -->
+                        <div class="submit">
+                            <button type="submit" class="submit-btn">
+                                <em class="fa fa-search search-icon"></em>
+                            </button>
+                        </div>
+                        <!-- <div class="close">
+                            
+                        </div> -->
+                    </div>
+                </form>
+                <div class="account-wrapper">
+                    <div class="link-wrapper">
+                        {% if not session['is_logged'] %}
+                        <div class="login">
+                            <i class="fa fa-sign-in"></i>&nbsp;&nbsp;<span class="link-text"><a href="{{ url_for('login') }}" class="url">Log In</a></span>
+                        </div>
+                        <div class="signup">
+                            <i class="fa fa-user-plus"></i>&nbsp;&nbsp;<span class="link-text"><a href="{{ url_for('signup') }}" class="url">Sign Up</a></span> <!-- TODO: change url_for -->
+                        </div>
+                        {% else %}
+                        {% block myaccount %}
+                        <div class="my-account">
+                            <i class="fa fa-user"></i>&nbsp;&nbsp;<span class="link-text"><a href="{{ url_for('myaccount') }}" class="url">My Account</a></span>
+                        </div>
+                        {% endblock myaccount %}
+                        <div class="logout">
+                            <i class="fa fa-sign-out"></i>&nbsp;&nbsp;<span class="link-text"><a href="{{ url_for('logout') }}" class="url">Log Out</a></span>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- <div class="my-account">
+                        <span>My Account</span>
+                    </div>
+                    <div class="logout">
+                        <span>Log Out</span> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        </div>
+        {% endblock nav %}
+
+        {% include "flashes.html" %}
+
+        <div class="content">
+            {% block content %}{% endblock content %}
+        </div>
+
+    </div>
+
+    {% endblock body %}
+</body>
+
+</html>

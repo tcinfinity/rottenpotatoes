@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Rotten Potatoes - 404{% endblock %}
+
+{% block body %}
+<div class="jumbotron vertical-center">
+    <div class="container">
+        <h1 class="text-center font-weight-bold">404</h1>
+        <a href="{{ url_for('index') }}" class="a-img">
+            <img src="{{ url_for('static', filename='assets/icon256.png') }}" alt="Rotten Potatoes Logo">
+        </a>
+    </div>
+</div>
+{% endblock %}

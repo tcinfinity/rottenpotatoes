@@ -1,0 +1,234 @@
+h1, h2, h3, h4, h5, h6 {
+  letter-spacing: -0.5px;
+}
+a {
+  font-weight: 500;
+  transition: color 0.15s ease-in-out;
+}
+a:hover {
+  color: #1a73e8;
+}
+.set-max-width {
+  max-width: 450px;
+}
+.screen-height {
+  height: 100vh;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+.auto-margin {
+  margin: 0 auto;
+}
+.mar-left {
+  margin-left: 10px;
+}
+.mar-right {
+  margin-right: 10px;
+}
+.mar-top {
+  margin-top: 10px;
+}
+.mar-bottom {
+  margin-bottom: 10px;
+}
+.mar-all {
+  margin: 10px;
+}
+.mar-no {
+  margin: 0 !important;
+}
+.pad-left {
+  padding-left: 10px;
+}
+.pad-right {
+  padding-right: 10px;
+}
+.pad-top {
+  padding-top: 10px;
+}
+.pad-bottom {
+  padding-bottom: 10px;
+}
+.pad-all {
+  padding: 10px;
+}
+.pad-no {
+  padding: 0 !important;
+}
+#form-container{
+  width: 200%;
+  position: relative;
+}
+.input-fields-div {
+  width: 90%;
+}
+.logo-image {
+  display: block;
+  margin: 10px auto;
+  max-height: 50px;
+}
+.clearfix {
+  width: 100%;
+  clear: both;
+}
+.form-title {
+  font-weight: bold;
+}
+.main-style {
+  margin: 0;
+  padding: 0;
+}
+.main-style input[type=text]:not(.browser-default):focus:not([readonly]),
+.main-style input[type=password]:not(.browser-default):focus:not([readonly]) {
+  box-shadow: 0px 0 1px #1a73e8;
+  border: 1px solid #1a73e8;
+  border-radius: 5px;
+}
+.main-style input[type=text]:not(.browser-default):focus:not([readonly]) + label,
+.main-style input[type=password]:not(.browser-default):focus:not([readonly]) + label {
+  color: #1a73e8;
+}
+.main-style input[type=text]:not(.browser-default),
+.main-style input[type=password]:not(.browser-default) {
+  border: 1px solid #dadce0;
+  text-indent: 10px;
+  border-radius: 5px;
+}
+.main-style .input-field > label:not(.label-icon).active {
+  width: auto !important;
+  background: #FFFFFF;
+  left: 10px;
+  top: 3px;
+  padding-left: 5px;
+  padding-right: 5px;
+  text-indent: 0;
+  color: #1a73e8; /* override materialize */
+}
+.main-style .input-inline-field .input-field > label:not(.label-icon).active {
+  left: 20px;
+}
+.main-style .input-field > label {
+  width: 98%;
+  text-indent: 10px;
+}
+.main-style .scale-transition.scale-out {
+  height: 0;
+  margin: 0;
+}
+.main-style .input-field {
+  margin-bottom: 0;
+}
+.forgot-password {
+  display: inline-block;
+  margin-top: 1rem;
+}
+.hidden {
+  visibility: hidden;
+}
+.overflow-hidden {
+  overflow: hidden;
+}
+.login-form, .signup-form {
+  position: relative;
+  width: 50%;
+  float: left;
+}
+#reg_passwordDiv, #passwordDiv{position: relative;}
+#form-container.goLeft {
+  -webkit-animation: slideLeft 0.2s forwards;
+  animation: slideLeft 0.2s forwards;
+}
+#form-container.go-right {
+  -webkit-animation: zeroLeft 0.2s forwards;
+  animation: zeroLeft 0.2s forwards;
+}
+.show-password {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  right: 10px;
+}
+.input-inline-field .show-password{
+  right: 15px;
+}
+
+@-webkit-keyframes slideLeft {
+  from { left: 0; }
+  to { left: -100%; }
+}
+@keyframes slideLeft {
+  from { left: 0; }
+  to { left: -100%; }
+}
+@-webkit-keyframes zeroLeft {
+  from { left: -100%; }
+  to { left: 0; }
+}
+@keyframes zeroLeft {
+  from { left: -100%; }
+  to { left: 0; }
+}
+
+/* flashes */
+.flash-variable {
+  font-weight: bold;
+}
+.alert-link:hover {
+  text-decoration: none; /* remove underline */
+}
+
+/* error messages */
+.invalid-feedback {
+  color: #d93025;
+}
+.signup-pw-invalid-feedback {
+  font-size: 0.7rem;
+}
+.invalid-height { /* toggle visibility icon vertical center needs to be altered */
+  top: 40%;
+}
+
+/* fixes */
+.create-account {
+  cursor: pointer;
+}
+
+/* visibility icon */
+.show-password i {
+  transition: color 0.15s ease-in-out;
+}
+.show-password i:hover {
+  color: #1a73e8;
+}
+.show-password i.icon-pw-visible {
+  color: #a2a2a2;
+}
+
+/* override materialize */
+.progress {
+  background-color: rgba(66, 133, 244, 0.40);
+}
+.progress .indeterminate {
+  background-color: #1a73e8;
+}
+.btn {
+  background-color: #1a73e8;
+}
+.btn:hover {
+  background-color: #0564e0;
+}
+[type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+  position: inherit;
+  opacity: 1;
+  pointer-events: all;
+}
+label {
+  font-size: 1rem;
+}
+/* button:focus {
+  outline: inherit;
+  background-color: inherit;
+} */

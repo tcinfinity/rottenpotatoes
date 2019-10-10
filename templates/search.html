@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if not results %}
+
+    <div class="card bg-danger">
+        <div class="card-body">
+        No results were found for: 
+        <h6 class="card-subtitle mb-2" style="margin-top: 0.4rem; color: #fff;">{{ search_query }}</h6>
+        </div>
+    </div>
+
+{% else %}
+
+    <div class="card bg-success">
+        <div class="card-body">
+            Showing results for:
+            <h5 class="card-subtitle mb-2" style="margin-top: 0.4rem; color: #fff;">{{ search_query }}</h5>
+            {# check for 20 results - maximum #}
+            <br><h6 class="max-results">Showing top {{ max_results[0] }} of {{ max_results[1] }} results</h6>
+        </div>
+    </div>
+
+    {% for result, imageURL in results %}
+        {# result and imageURL are [..., ...] chunks of 2 elements #}
+        {# results - 0 id, 1 title, 2 year, 3 runtime, 4 imdbRating, 5 rpRating #}
+
+        <div class="card-deck">
+            {% with left = result[0] %}
+            <div class="card col-md-6 col-xs-12 card-fit-content {{ 'single-card' if result|length == 1 }}">
+                <img src="{{ imageURL[0] }}" class="card-img-top img-responsive" alt="{{ left[1] }} - Poster">
+                <div class="card-body card-fit-content">
+                    <!-- title --><h5 class="card-title">{{ left[1] }}</h5>
+                    <!-- year --><h6 class="card-subtitle mb-2 text-muted">{{ left[2] }}</h6>
+                
+                    <p class="card-text">
+                        <a href="{{ url_for('movie_details', imdb_id=left[0]) }}">View details...</a> <!--class="btn btn-primary"-->
+                    </p>
+
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item no-padding">
+                            <table class="table table-borderless no-margin-bottom">
+                                <tr>
+                                    <th scope="col" class="text-left">
+                                        <h6 class="font-weight-bold">Runtime</h6>
+                                    </th>
+                                    <th scope="col" class="text-right">
+                                        <h6 class="text-muted">{{ left[3] }} min</h6>
+                                    </th>
+                                </tr>
+                            </table>
+                        </li>
+                        
+                        <li class="list-group-item no-padding">
+                            <table class="table table-borderless no-margin-bottom">
+                                <tr>
+                                    <th scope="col" class="text-left">
+                                        <h6 class="font-weight-bold">IMDB Rating</h6>
+                                    </th>
+                                    <th scope="col" class="text-right">
+                                        <h6 class="text-muted">{{ left[4] }}</h6>
+                                    </th>
+                                </tr>
+                            </table>
+                        </li>
+        
+                        <li class="list-group-item no-padding">
+                            <table class="table table-borderless no-margin-bottom">
+                                <tr>
+                                    <th scope="col" class="text-left">
+                                        <h6 class="font-weight-bold">Our Rating</h6>
+                                    </th>
+                                    <th scope="col" class="text-right">
+                                        <h6 class="text-muted">{{ left[5] }}</h6>
+                                    </th>
+                                </tr>
+                            </table>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="card-footer">
+                    <small class="text-muted">IMDB ID: {{ left[0] }}</small>
+                </div>
+            </div>
+            {% endwith %}
+    
+            {% if result|length > 1 %}
+            {# for odd number of results #}
+            {% with right = result[1] %}
+            <div class="card col-md-6 col-xs-12 card-fit-content">
+                <img src="{{ imageURL[1] }}" class="card-img-top img-responsive" alt="{{ right[1] }} - Poster">
+                <div class="card-body card-fit-content">
+                    <!-- title --><h5 class="card-title">{{ right[1] }}</h5>
+                    <!-- year --><h6 class="card-subtitle mb-2 text-muted">{{ right[2] }}</h6>
+                    <p class="card-text">
+                        <a href="{{ url_for('movie_details', imdb_id=right[0]) }}">View details...</a> <!--class="btn btn-primary"-->
+                    </p>
+
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item no-padding">
+                            <table class="table table-borderless no-margin-bottom">
+                                <tr>
+                                    <th scope="col" class="text-left">
+                                        <h6 class="font-weight-bold">Runtime</h6>
+                                    </th>
+                                    <th scope="col" class="text-right">
+                                        <h6 class="text-muted">{{ right[3] }} min</h6>
+                                    </th>
+                                </tr>
+                            </table>
+                        </li>
+                        
+                        <li class="list-group-item no-padding">
+                            <table class="table table-borderless no-margin-bottom">
+                                <tr>
+                                    <th scope="col" class="text-left">
+                                        <h6 class="font-weight-bold">IMDB Rating</h6>
+                                    </th>
+                                    <th scope="col" class="text-right">
+                                        <h6 class="text-muted">{{ right[4] }}</h6>
+                                    </th>
+                                </tr>
+                            </table>
+                        </li>
+        
+                        <li class="list-group-item no-padding">
+                            <table class="table table-borderless no-margin-bottom">
+                                <tr>
+                                    <th scope="col" class="text-left">
+                                        <h6 class="font-weight-bold">Our Rating</h6>
+                                    </th>
+                                    <th scope="col" class="text-right">
+                                        <h6 class="text-muted">{{ right[5] }}</h6>
+                                    </th>
+                                </tr>
+                            </table>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="card-footer">
+                    <small class="text-muted">IMDB ID: {{ right[0] }}</small>
+                </div>
+            </div>
+            {% endwith %}
+            {% endif %}
+        </div>
+
+    {% endfor %}
+    
+{% endif %}
+{% endblock %}

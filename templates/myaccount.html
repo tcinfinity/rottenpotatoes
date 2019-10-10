@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Rotten Potatoes - My Account{% endblock %}
+
+{% block myaccount %}
+<div class="home">
+    <i class="fa fa-home"></i>&nbsp;&nbsp;<span class="link-text"><a href="{{ url_for('index') }}" class="url">Home</a></span>
+</div>
+{% endblock %}
+
+{% block content %}
+<h3>Welcome back, {{ session['username'] }}.</h3><hr>
+<h4 class="font-weight-bold">Your Reviews</h4>
+
+{% if reviews is none %}
+<div class="card bg-warning">
+    <div class="card-body">
+        <h5 class="card-text">You don't have any reviews yet.</h5>
+    </div>
+</div>
+{% else %}
+    {% for chunk in reviews %}
+    <div class="card-deck">
+        {% for review in chunk %}
+        <div class="card col-md-6 col-xs-12 {{ 'single-card' if chunk|length == 1 }}">
+            <div class="card-body">
+                <!-- title -->
+                <a href="{{ url_for('movie_details', imdb_id=review[0]) }}" class="no-underline"><h5 class="card-title">{{ review[1] }}</h5></a>
+                <!-- imdbID --><small class="text-muted">{{ review[0] }}</small>
+                <hr>
+                <h6><span class="font-weight-bold">Rating: </span>{{ review[2] }}</h6>
+                <br>
+                <h6 class="card-subtitle font-weight-bold">Review:</h6>
+                <p class="card-text">
+                    <h6 class="card-text">
+                        {{ review[3] }}
+                    </h6>
+                </p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endfor %}
+{% endif %}
+
+{% endblock %}
