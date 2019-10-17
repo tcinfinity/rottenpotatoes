@@ -66,9 +66,9 @@ def search(req):
     if escreq.isdigit():
         intreq = int(escreq)
 
-        if len(intreq) <= 4: # check for year
+        if len(escreq) == 4: # check for year
             # set maximum to save time
-            results = db.execute("SELECT * FROM movies WHERE year LIKE '%:year%'", {"year": intreq}).fetchmany(20)
+            results = db.execute("SELECT * FROM movies WHERE CAST(year AS TEXT) LIKE :year", {"year": escreq}).fetchmany(20)
         
         # if not year, check for imdb id
         if results is None:
@@ -77,8 +77,8 @@ def search(req):
 
     else:
         # not an integer
-        if escreq[:2] == 'tt' and len(escreq) > 3 and escreq[2:].isdigit(): # imdb id with starter tags
-            results = db.execute("SELECT * FROM movies WHERE id LIKE :id", {"id": 'tt%'+escreq[:2]+'%'}).fetchmany(20)
+        if escreq[:2] == 'tt' and len(escreq) >= 3 and escreq[3:].isdigit(): # imdb id with starter tags
+            results = db.execute("SELECT * FROM movies WHERE id LIKE :id", {"id": 'tt%'+escreq[3:]+'%'}).fetchmany(20)
 
         # not imdb id
         if results is None:
@@ -88,13 +88,13 @@ def search(req):
             splitreq = escreq.split(' ')
 
             # search each word with priority first in title to last
-            results = [
+            temp_results = [
                 db.execute("SELECT TOP 5 * FROM movies WHERE lower(title) LIKE lower(:word_like) ORDER BY CHARINDEX(lower(:word), title, 1), lower(title)", {"word": word, "word_like": '%'+word+'%'}).fetchall()
                 for i, word in enumerate(splitreq)
             ]
 
             # remove nesting
-            results = [inner for outer in results for inner in outer]
+            results = [inner for outer in temp_results for inner in outer]
 
 
     # all queries fail - set to None (since query causes result = [])
